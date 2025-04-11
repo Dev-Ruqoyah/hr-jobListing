@@ -67,20 +67,38 @@ const JobCategory = () => {
         <div className=" mx-auto mt-4 max-w-6xl h-full">
           {JCategory && (
             <Swiper
-              modules={[Navigation, Pagination, Scrollbar, A11y, Grid]}
-              spaceBetween={30}
-              slidesPerView={4}
-              grid={{
-                rows: 2,
-                fill: "row",
-              }}
-              pagination={{ clickable: true }}
-              className="max-w-7xl mx-auto h-full mt-12"
-            >
+            modules={[Navigation, Pagination, Scrollbar, A11y, Grid]}
+            spaceBetween={30}
+            slidesPerView={1} // Default
+            grid={{
+              rows: 2,
+              fill: "row",
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+                grid: { rows: 1 },
+              },
+              768: {
+                slidesPerView: 1,
+                grid: { rows: 1 },
+              },
+              1024: {
+                slidesPerView: 4,
+                grid: { rows: 2 },
+              },
+              1280: {
+                slidesPerView: 5,
+                grid: { rows: 2 },
+              },
+            }}
+            pagination={{ clickable: true }}
+            className="max-w-7xl mx-auto h-full mt-12"
+          >
               {Object.entries(JCategory).map(
                 ([categoryName, jobCount], index) => (
                   <SwiperSlide key={categoryName}>
-                    <div className=" my-2 p-4 h-24 mb-7 overflow-hidden shadow-md rounded-md bg-white flex flex-col justify-center">
+                    <div className=" my-2 p-4 md:h-24 h-52 mb-7 overflow-hidden shadow-md rounded-md bg-white flex flex-col justify-center">
                       <h4 className="text-md font-medium text-blue-800">
                         {categoryName}
                       </h4>
