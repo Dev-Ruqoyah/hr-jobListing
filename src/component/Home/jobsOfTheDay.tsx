@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import Header1 from "../Header/Header1";
 import Header2 from "../Header/Header2";
 import axios from "axios";
-import { CalendarDays } from "lucide-react";
-import { FaClock } from "react-icons/fa6";
+import JobCard from "../Cards/Jobcard";
 
 const JobOfTheDay = () => {
   const Jobs = [
@@ -23,7 +22,7 @@ const JobOfTheDay = () => {
       try {
         const { data } =
           await axios.get(`https://www.themuse.com/api/public/jobs?category=${searchQuery}&page=1`);
-        console.log(data.results);
+        // console.log(data.results);
         setJobCategory(data.results);
       } catch (error) {
         console.error();
@@ -47,15 +46,13 @@ const JobOfTheDay = () => {
     locations:[]
     publication_date:string
     type:string
+    contents: string
   }
+  const uniqueJob = JobCategory?.filter((job,index,self)=>index=self.findIndex(j=>j.name === job.name))
+  // console.log(uniqueJob);
+  
 
-  const formatDate = (dateStr:string) =>{
-    return new Date(dateStr).toLocaleDateString("en-US",{
-      year:"numeric",
-      month:"long",
-      day:"numeric"
-    })
-  }
+
   return (
     <>
       <div className="max-w-6xl mx-auto">
@@ -83,28 +80,7 @@ const JobOfTheDay = () => {
         {JobCategory && (
             <div className="grid grid-cols-1 my-4 md:grid-cols-3 lg:grid-cols-4 gap-3 ">
               {JobCategory.map((job: JobResult) => (
-               <div className="shadow-sm py-5 px-3 border border-gray-300 rounded-md" key={job.id}>
-                 <div className="flex items-center gap-3">
-                  <img src={`https://logo.clearbit.com/${job.company.short_name}.com`} alt={`${job.company.name}`} className="h-12 w-12 rounded-md" />
-                  <div className="flex flex-col">
-                    <h3 className="text-xxl font-semibold">{job.company.name}</h3>
-                    <p className="text-[12px] text-gray-500">{job.locations?.[0].name}</p>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-md font-semibold">{job.name}</h4>
-                  <div className="flex justify-between items-center mt-3">
-                    <div className="flex items-center gap-1">
-                      <FaClock className="w-3 h-3"/>
-                      <p className="text-[12px] text-gray-500">{job.type}</p>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <CalendarDays className="w-3 h-3"/>
-                      <p className="text-[12px] text-gray-500">{formatDate(job.publication_date)}</p>
-                    </div>
-                  </div>
-                </div>
-               </div>
+               <JobCard job={job} key={job.id} />
               ))}
             </div>
           )}
