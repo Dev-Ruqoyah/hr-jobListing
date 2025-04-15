@@ -30,7 +30,7 @@ const JobCategory = () => {
       const results = await Promise.all(jobRequests);
       allJobs = results.flat(); // Flatten the array of results into one array
 
-      console.log(`Fetched all pages`);
+      // console.log(`Fetched all pages`);
 
       // Group jobs by category
       const categoryJob = allJobs.reduce(
@@ -44,7 +44,7 @@ const JobCategory = () => {
         {}
       );
 
-      console.log("Jobs by Category:", categoryJob);
+      // console.log("Jobs by Category:", categoryJob);
       setJobCategory(categoryJob);
     } catch (error) {
       console.error("Error fetching jobs:", error);
