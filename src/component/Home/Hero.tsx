@@ -73,7 +73,7 @@ interface CountryResult{
                       className="border-0 focus:outline-0 w-full"
                       onChange={(e)=>setCategory(e.target.value)}
                     >
-                      <option value=""  selected disabled></option>
+                      <option value="Remote">Remote</option>
                       {
                         categories?.map((category)=>(
                           <option value={category.name} key={category.slug} >{category.name}</option>

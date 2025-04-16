@@ -22,7 +22,7 @@ const JobOfTheDay = () => {
       try {
         const { data } =
           await axios.get(`https://www.themuse.com/api/public/jobs?category=${searchQuery}&page=1`);
-        // console.log(data.results);
+        console.log(data.results);
         setJobCategory(data.results);
       } catch (error) {
         console.error();
@@ -47,6 +47,7 @@ const JobOfTheDay = () => {
     publication_date:string
     type:string
     contents: string
+    refs:{landing_pafe:string}
   }
   const uniqueJob = JobCategory?.filter((job,index,self)=>index=self.findIndex(j=>j.name === job.name))
   // console.log(uniqueJob);
