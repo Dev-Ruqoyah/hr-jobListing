@@ -22,7 +22,7 @@ function App() {
   const [selectedCategory,setCategory] = useState("")  
   const [role,setRole] = useState("")
   
-  const[location,setLocation] = useState("Remote")
+  const[location,setLocation] = useState("")
   const categories = [
     {
       name:"Account Management",

@@ -10,12 +10,36 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
 const context= useContext(SearchContext)
+const[country,setCountry] = useState<CountryResult[]>([])
 
 if(!context) return null
 const{categories,setCategory,setRole,setLocation,role,location} = context
 
+useEffect(()=>{
+  try {
+    
+    const fetchCountry = async()=>{
+      const {data} = await axios.get("https://restcountries.com/v3.1/all")
+      const sortedCountries = data.sort((a: CountryResult, b: CountryResult) => {
+        const nameA = a.name.common.toLowerCase();
+        const nameB = b.name.common.toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+      setCountry(sortedCountries)
+  
+      
+    }
+    fetchCountry()
+  } catch (error) {
+    
+  }
+},[])
 
+interface CountryResult{
+  name:{common:string,official:string}
+  ccn3:string
 
+}
 
 
 
@@ -90,14 +114,18 @@ const{categories,setCategory,setRole,setLocation,role,location} = context
                     >
                       Location
                     </label>
-                    <input
-                      type="text"
+                    <select
+                      id="industry"
                       className="border-0 focus:outline-0 w-full"
-                      onChange={(e)=>setLocation(e.target.value)}
-                      value={location}
-                      
-                      
-                    />
+                      onChange={(e)=>setCategory(e.target.value)}
+                    >
+                      <option value=""  selected disabled></option>
+                      {
+                        country.map((coun:CountryResult)=>(
+                          <option value={coun.name.common} key={coun.ccn3} >{coun.name.common}</option>
+                        ))                     }
+                    </select>
+                   
                   </div>
 
                   {/* Search Button */}
