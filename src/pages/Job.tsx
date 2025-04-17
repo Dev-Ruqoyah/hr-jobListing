@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
-import { SearchContext } from "../App";
 import axios from "axios";
+import { SearchContext } from "../component/Context/SearchContext";
 
 const JobBrowse = () => {
     const context = useContext(SearchContext)
@@ -10,7 +10,7 @@ const JobBrowse = () => {
     useEffect(()=>{
         const  fetchJobs = async()=>{
             const {data} = await axios.get(`https://www.themuse.com/api/public/jobs?q=${role}&location=${location}&page=1`)
-            // console.log(data);
+            console.log(data);
             
         }
         fetchJobs()

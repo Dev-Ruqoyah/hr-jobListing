@@ -17,6 +17,9 @@ interface JobResult {
   publication_date: string;
   type: string;
   contents: string;
+  refs:{landing_page:string}
+
+
 }
 const formatDate = (dateStr: string) => {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -82,6 +85,7 @@ const JobCard = ({ job }: { job: JobResult }) => {
         title={job.name}
         companyName={job.company.name}
         companyShortName={job.company.short_name}
+        refs={job.refs}
       >
         <div
           className="prose max-w-none"

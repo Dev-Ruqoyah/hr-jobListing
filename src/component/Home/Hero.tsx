@@ -5,35 +5,37 @@ import img from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.jpg";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { SearchContext } from "../../App";
+
 import { Link } from "react-router-dom";
+import { SearchContext } from "../Context/SearchContext";
 
 const Hero = () => {
 const context= useContext(SearchContext)
 const[country,setCountry] = useState<CountryResult[]>([])
+const [loading, setLoading] = useState(true);
+
 
 if(!context) return null
 const{categories,setCategory,setRole,setLocation,role,location} = context
 
-useEffect(()=>{
-  try {
-    
-    const fetchCountry = async()=>{
-      const {data} = await axios.get("https://restcountries.com/v3.1/all")
+useEffect(() => {
+  const fetchCountry = async () => {
+    try {
+      const { data } = await axios.get("https://restcountries.com/v3.1/all");
       const sortedCountries = data.sort((a: CountryResult, b: CountryResult) => {
         const nameA = a.name.common.toLowerCase();
         const nameB = b.name.common.toLowerCase();
         return nameA.localeCompare(nameB);
       });
-      setCountry(sortedCountries)
-  
-      
+      setCountry(sortedCountries);
+    } catch (error) {
+      console.error("Failed to fetch countries", error);
     }
-    fetchCountry()
-  } catch (error) {
-    
-  }
-},[])
+  };
+  fetchCountry();
+}, []);
+console.log(location);
+
 
 interface CountryResult{
   name:{common:string,official:string}
@@ -73,7 +75,7 @@ interface CountryResult{
                       className="border-0 focus:outline-0 w-full"
                       onChange={(e)=>setCategory(e.target.value)}
                     >
-                      <option value="Remote">Remote</option>
+                      <option value="none" selected disabled></option>
                       {
                         categories?.map((category)=>(
                           <option value={category.name} key={category.slug} >{category.name}</option>
@@ -117,13 +119,13 @@ interface CountryResult{
                     <select
                       id="industry"
                       className="border-0 focus:outline-0 w-full"
-                      onChange={(e)=>setCategory(e.target.value)}
+                      onChange={(e)=>setLocation(e.target.value)} 
                     >
-                      <option value=""  selected disabled></option>
+                      <option value="Remote">Remote</option>
                       {
                         country.map((coun:CountryResult)=>(
                           <option value={coun.name.common} key={coun.ccn3} >{coun.name.common}</option>
-                        ))                     }
+                        ))}
                     </select>
                    
                   </div>

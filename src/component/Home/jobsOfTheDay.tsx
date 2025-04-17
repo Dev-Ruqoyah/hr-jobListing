@@ -3,6 +3,8 @@ import Header1 from "../Header/Header1";
 import Header2 from "../Header/Header2";
 import axios from "axios";
 import JobCard from "../Cards/Jobcard";
+import { Loader } from "lucide-react";
+import Loading from "../Loader/Loading";
 
 const JobOfTheDay = () => {
   const Jobs = [
@@ -17,18 +19,19 @@ const JobOfTheDay = () => {
 
   const [searchQuery, setJobQuery] = useState<string>("Sales");
   const [JobCategory, setJobCategory] = useState<[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const { data } =
-          await axios.get(`https://www.themuse.com/api/public/jobs?category=${searchQuery}&page=1`);
-        console.log(data.results);
+        const { data } = await axios.get(
+          `https://www.themuse.com/api/public/jobs?category=${searchQuery}&page=1`
+        );
+        // console.log(data.results[0].refs);
         setJobCategory(data.results);
+        setLoading(false);
       } catch (error) {
         console.error();
       }
-
-     
     };
     fetchCategory();
   }, [searchQuery]);
@@ -36,23 +39,20 @@ const JobOfTheDay = () => {
     id: number;
     short_name: string;
     name: string;
-   
   }
   interface JobResult {
     name: string;
     jobDescription: string;
     id: number;
     company: CompanyDetails;
-    locations:[]
-    publication_date:string
-    type:string
-    contents: string
-    refs:{landing_pafe:string}
+    locations: [];
+    publication_date: string;
+    type: string;
+    contents: string;
+    refs: { landing_page: string };
   }
-  const uniqueJob = JobCategory?.filter((job,index,self)=>index=self.findIndex(j=>j.name === job.name))
+  // const uniqueJob = JobCategory?.filter((job,index,self)=>index=self.findIndex(j=>j.name === job.name))
   // console.log(uniqueJob);
-  
-
 
   return (
     <>
@@ -64,7 +64,9 @@ const JobOfTheDay = () => {
         <div className="flex flex-nowrap md:overflow-x-hidden overflow-x-scroll gap-3 my-3 items-center justify-center">
           {Jobs.map((job) => (
             <button
-              onClick={() => setJobQuery(job)}
+              onClick={() => {setLoading(true)
+                 setJobQuery(job)}}
+              
               key={job}
               className={`py-2 px-3 cursor-pointer border text-[13px]  md:w-72 h-12 overflow-y-hidden w-[50%] rounded-md ${
                 searchQuery === job
@@ -75,15 +77,18 @@ const JobOfTheDay = () => {
               {job}
             </button>
           ))}
-         
         </div>
         <div className="mt-5">
-        {JobCategory && (
-            <div className="grid grid-cols-1 my-4 md:grid-cols-3 lg:grid-cols-4 gap-3 ">
-              {JobCategory.map((job: JobResult) => (
-               <JobCard job={job} key={job.id} />
-              ))}
-            </div>
+          {loading ? (
+            <Loading />
+          ) : (
+            JobCategory && (
+              <div className="grid grid-cols-1 my-4 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {JobCategory.map((job: JobResult) => (
+                  <JobCard job={job} key={job.id} />
+                ))}
+              </div>
+            )
           )}
         </div>
       </div>
