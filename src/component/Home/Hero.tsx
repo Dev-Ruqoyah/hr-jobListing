@@ -1,18 +1,22 @@
+interface CountryResult{
+  name:{common:string,official:string}
+  ccn3:string
+
+}
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import Divider from "../divider";
 import img1 from "../../assets/img.jpg";
-import img from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.jpg";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../Context/SearchContext";
 
 const Hero = () => {
 const context= useContext(SearchContext)
 const[country,setCountry] = useState<CountryResult[]>([])
 const [loading, setLoading] = useState(true);
+const navigate = useNavigate()
 
 
 if(!context) return null
@@ -34,13 +38,11 @@ useEffect(() => {
   };
   fetchCountry();
 }, []);
-console.log(location);
 
 
-interface CountryResult{
-  name:{common:string,official:string}
-  ccn3:string
-
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
+  e.preventDefault()
+  navigate("/jobs")
 }
 
 
@@ -60,7 +62,7 @@ interface CountryResult{
                 Browse thousands of job opportunities, connect with top
                 companies, and land your perfect role with ease.
               </p>
-              <form action="" className="">
+              <form action="" className="" onSubmit={handleSubmit}>
                 <div className="flex flex-col md:flex-row gap-4 bg-white py-4 px-4 md:mt-4 shadow-md rounded-md items-stretch md:items-center">
                   {/* First Column */}
                   <div className="flex-1">
@@ -71,11 +73,11 @@ interface CountryResult{
                       Category
                     </label>
                     <select
-                      id="industry"
+                      id="category"
                       className="border-0 focus:outline-0 w-full"
                       onChange={(e)=>setCategory(e.target.value)}
                     >
-                      <option value="none" selected disabled></option>
+                      <option value="none" hidden disabled></option>
                       {
                         categories?.map((category)=>(
                           <option value={category.name} key={category.slug} >{category.name}</option>
@@ -117,8 +119,8 @@ interface CountryResult{
                       Location
                     </label>
                     <select
-                      id="industry"
-                      className="border-0 focus:outline-0 w-full"
+                      id="location"
+                      className="border-0 focus:outline-0 w-full" value={location}
                       onChange={(e)=>setLocation(e.target.value)} 
                     >
                       <option value="Remote">Remote</option>
@@ -132,13 +134,13 @@ interface CountryResult{
 
                   {/* Search Button */}
                   <div className="flex justify-end md:justify-start">
-                    <Link to={"/jobs"}>
                     
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 w-full md:w-auto justify-center">
+                    
+                    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 w-full md:w-auto justify-center">
                       <FaMagnifyingGlass className="text-white" />
                       <p>Search</p>
                     </button>
-                    </Link>
+                    
                   </div>
                 </div>
               </form>

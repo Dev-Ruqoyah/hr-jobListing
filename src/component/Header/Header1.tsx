@@ -3,7 +3,7 @@ interface HeaderTitle{
 }
 const Header1:React.FC<HeaderTitle> = ({headertitle}) => {
   return (
-    <h3 className="text-2xl font-semibold text-blue-950">
+    <h3 className="text-2xl font-semibold text-center text-blue-950">
     {headertitle}
   </h3>
   )

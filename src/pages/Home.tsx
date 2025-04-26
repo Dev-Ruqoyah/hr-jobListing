@@ -3,9 +3,10 @@ import JobCategory from '../component/Home/Category'
 import Hero from '../component/Home/Hero'
 import NavBar from '../component/Home/NavBar'
 import JobOfTheDay from '../component/Home/jobsOfTheDay'
+import FeaturedCompanies from '../component/Home/FeatureCompany'
 
 const Home = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect   (() => {
     const timer = setTimeout(() => {
@@ -36,6 +37,7 @@ const Home = () => {
         <Hero/>
         <JobCategory/>
         <JobOfTheDay/>
+        <FeaturedCompanies/>
         
     </>
   )

@@ -1,21 +1,7 @@
 import { CalendarDays } from "lucide-react";
 import { FaClock } from "react-icons/fa6";
+import JobResult from "../Models/JobModel";
 
-interface CompanyDetails {
-  id: number;
-  short_name: string;
-  name: string;
-}
-interface JobResult {
-  id: number;
-  name: string;
-  company: CompanyDetails;
-  locations: { name: string }[];
-  publication_date: string;
-  type: string;
-  contents: string;
-  refs: { landing_page: string };
-}
 
 const formatDate = (dateStr: string) => {
   return new Date(dateStr).toLocaleDateString("en-US", {

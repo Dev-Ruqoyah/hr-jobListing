@@ -5,6 +5,7 @@ import axios from "axios";
 import JobCard from "../Cards/Jobcard";
 import { Loader } from "lucide-react";
 import Loading from "../Loader/Loading";
+import JobResult from "../Models/JobModel";
 
 const JobOfTheDay = () => {
   const Jobs = [
@@ -35,22 +36,7 @@ const JobOfTheDay = () => {
     };
     fetchCategory();
   }, [searchQuery]);
-  interface CompanyDetails {
-    id: number;
-    short_name: string;
-    name: string;
-  }
-  interface JobResult {
-    name: string;
-    jobDescription: string;
-    id: number;
-    company: CompanyDetails;
-    locations: [];
-    publication_date: string;
-    type: string;
-    contents: string;
-    refs: { landing_page: string };
-  }
+ 
   // const uniqueJob = JobCategory?.filter((job,index,self)=>index=self.findIndex(j=>j.name === job.name))
   // console.log(uniqueJob);
 

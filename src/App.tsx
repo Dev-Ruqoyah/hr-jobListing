@@ -7,10 +7,10 @@ import { SearchContext } from './component/Context/SearchContext'
 
 
 function App() {
-  const [selectedCategory,setCategory] = useState("")  
-  const [role,setRole] = useState("")
+  const [selectedCategory,setCategory] = useState<string>("")  
+  const [role,setRole] = useState<string>("")
   
-  const[location,setLocation] = useState("Remote")
+  const[location,setLocation] = useState<string>("")
   const categories = [
     {
       name:"Account Management",
@@ -23,7 +23,19 @@ function App() {
     {
       name:"Software Engineering",
       slug:"software engineering"
-    }
+    },
+    {
+      name:"Human Resources and Recruitment",
+      slug:"Human Resources and Recruitment"
+    },
+    {
+      name:"Legal Services",
+      slug:"Legal Services"
+    },
+    {
+      name:"Accounting and Finance",
+      slug:"Accounting and Finance"
+    },
   ]
 
   
