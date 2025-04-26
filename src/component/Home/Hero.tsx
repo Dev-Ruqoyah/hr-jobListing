@@ -9,13 +9,12 @@ import img2 from "../../assets/img2.jpg";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../Context/SearchContext";
 
 const Hero = () => {
 const context= useContext(SearchContext)
 const[country,setCountry] = useState<CountryResult[]>([])
-const [loading, setLoading] = useState(true);
 const navigate = useNavigate()
 
 
