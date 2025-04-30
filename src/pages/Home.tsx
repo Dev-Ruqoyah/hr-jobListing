@@ -4,6 +4,8 @@ import Hero from '../component/Home/Hero'
 import NavBar from '../component/Home/NavBar'
 import JobOfTheDay from '../component/Home/jobsOfTheDay'
 import FeaturedCompanies from '../component/Home/FeatureCompany'
+import BlogSection from '../component/Home/BlogSection'
+import Footer from '../component/Home/Footer'
 
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,6 +40,8 @@ const Home = () => {
         <JobCategory/>
         <JobOfTheDay/>
         <FeaturedCompanies/>
+        <BlogSection/>
+        <Footer/>
         
     </>
   )

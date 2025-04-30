@@ -17,10 +17,9 @@ interface JobResult {
   publication_date: string;
   type: string;
   contents: string;
-  refs:{landing_page:string}
-
-
+  refs: { landing_page: string };
 }
+
 const formatDate = (dateStr: string) => {
   return new Date(dateStr).toLocaleDateString("en-US", {
     year: "numeric",
@@ -28,57 +27,56 @@ const formatDate = (dateStr: string) => {
     day: "numeric",
   });
 };
+
 const JobCard = ({ job }: { job: JobResult }) => {
   const [open, setOpen] = useState(false);
+
   return (
     <>
       <div
-        className="shadow-sm py-5 px-3 border border-gray-300 rounded-md"
+        className="bg-white p-5 rounded-lg border hover:shadow-lg transition duration-300 cursor-pointer"
         onClick={() => setOpen(true)}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4 mb-4">
           <img
             src={`https://logo.clearbit.com/${job.company.short_name}.com`}
-            alt={`${job.company.name}`}
-            className="h-12 w-12 rounded-md"
-            onError={(e: any) => {
-              e.target.src = ""; // fallback image
-            }}
+            alt={job.company.name}
+            className="h-10 w-10 rounded object-cover"
+            onError={(e: any) => (e.target.src = "")} // fallback image
           />
-          <div className="flex flex-col">
-            <h3
-              title={`${job.company.name}`}
-              className="text-xxl font-semibold line-clamp-1"
-            >
+          <div>
+            <h3 className="text-base font-semibold text-gray-800 line-clamp-1">
               {job.company.name}
             </h3>
-            <p className="text-[12px] text-gray-500">
-              {job.locations?.[0].name}
+            <p className="text-xs text-gray-500">
+              {job.locations?.[0]?.name || "Remote"}
             </p>
           </div>
         </div>
-        <div>
-          <h4 className="text-md font-semibold line-clamp-2 leading-snug min-h-[3.25rem]">
+
+        <div className="mb-3">
+          <h4 className="text-md font-semibold text-gray-700 leading-tight line-clamp-2 min-h-[3rem]">
             {job.name}
           </h4>
-          <div className="flex justify-between items-center mt-3">
-            <div className="flex items-center gap-1">
-              <FaClock className="w-3 h-3" />
-              <p className="text-[12px] text-gray-500">{job.type}</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <CalendarDays className="w-3 h-3" />
-              <p className="text-[12px] text-gray-500">
-                {formatDate(job.publication_date)}
-              </p>
-            </div>
-          </div>
-          <p
-            className="line-clamp-4 text-sm text-gray-500 font-medium "
-            dangerouslySetInnerHTML={{ __html: job.contents }}
-          ></p>
         </div>
+
+        <div className="flex justify-between items-center text-xs text-gray-500 mb-3">
+          <div className="flex items-center gap-1">
+            <FaClock className="w-3.5 h-3.5" />
+            <span>{job.type}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <CalendarDays className="w-3.5 h-3.5" />
+            <span>{formatDate(job.publication_date)}</span>
+          </div>
+        </div>
+
+        <p
+          className="text-sm text-gray-600 leading-relaxed line-clamp-4"
+          dangerouslySetInnerHTML={{ __html: job.contents }}
+        ></p>
       </div>
+
       <Modal
         isOpen={open}
         onClose={() => setOpen(false)}

@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import { createContext, useState } from 'react'
 import JobBrowse from './pages/Job'
 import { SearchContext } from './component/Context/SearchContext'
+import ErrorPage from './component/Home/ErrorPage'
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
     <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/jobs' element={<JobBrowse/>}/>
+        <Route path='*' element={<ErrorPage/>}/>
       </Routes>
     </SearchContext.Provider>
     

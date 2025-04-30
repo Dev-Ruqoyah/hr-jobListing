@@ -56,7 +56,7 @@ const JobCategory = () => {
   }, []);
 
   return (
-    <div className="bg-white py-9 ">
+    <div className="bg-white py-9 max-w-6xl px-4 mx-auto ">
       <div className="container mx-auto ">
         <div className="flex flex-col justify-center items-center">
        <Header1 headertitle="Browse by Category"/>
@@ -99,7 +99,7 @@ const JobCategory = () => {
                 ([categoryName, jobCount], index) => (
                   <SwiperSlide key={categoryName}>
                     <div className=" my-2 p-4 md:h-24 h-52 mb-7 overflow-hidden shadow-md rounded-md bg-white flex flex-col justify-center">
-                      <h4 className="text-md font-medium text-blue-800">
+                      <h4 className="text-md font-medium text-blue-800 line-clamp-1">
                         {categoryName}
                       </h4>
                       <p className="text-gray-600">

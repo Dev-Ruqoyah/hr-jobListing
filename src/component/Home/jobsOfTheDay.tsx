@@ -36,13 +36,13 @@ const JobOfTheDay = () => {
     };
     fetchCategory();
   }, [searchQuery]);
- 
+
   // const uniqueJob = JobCategory?.filter((job,index,self)=>index=self.findIndex(j=>j.name === job.name))
   // console.log(uniqueJob);
 
   return (
     <>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col justify-center items-center">
           <Header1 headertitle="Jobs of the Day" />
           <Header2 subheadingtitle="Search and connect with the employer faster" />
@@ -50,9 +50,10 @@ const JobOfTheDay = () => {
         <div className="flex flex-nowrap md:overflow-x-hidden overflow-x-scroll gap-3 my-3 items-center justify-center">
           {Jobs.map((job) => (
             <button
-              onClick={() => {setLoading(true)
-                 setJobQuery(job)}}
-              
+              onClick={() => {
+                setLoading(true);
+                setJobQuery(job);
+              }}
               key={job}
               className={`py-2 px-3 cursor-pointer border text-[13px]  md:w-72 h-12 overflow-y-hidden w-[50%] rounded-md ${
                 searchQuery === job
@@ -69,7 +70,7 @@ const JobOfTheDay = () => {
             <Loading />
           ) : (
             JobCategory && (
-              <div className="grid grid-cols-1 my-4 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                 {JobCategory.map((job: JobResult) => (
                   <JobCard job={job} key={job.id} />
                 ))}
