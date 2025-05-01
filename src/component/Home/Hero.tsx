@@ -1,7 +1,6 @@
-interface CountryResult{
-  name:{common:string,official:string}
-  ccn3:string
-
+interface CountryResult {
+  name: { common: string; official: string };
+  ccn3: string;
 }
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import img1 from "../../assets/img.jpg";
@@ -11,42 +10,41 @@ import { useContext, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../Context/SearchContext";
+import { motion } from "framer-motion";
 
 const Hero = () => {
-const context= useContext(SearchContext)
-const[country,setCountry] = useState<CountryResult[]>([])
-const navigate = useNavigate()
+  const context = useContext(SearchContext);
+  const [country, setCountry] = useState<CountryResult[]>([]);
+  const navigate = useNavigate();
 
+  if (!context) return null;
+  const { categories, setCategory, setRole, setLocation, role, location } =
+    context;
 
-if(!context) return null
-const{categories,setCategory,setRole,setLocation,role,location} = context
+  useEffect(() => {
+    const fetchCountry = async () => {
+      try {
+        const { data } = await axios.get("https://restcountries.com/v3.1/all");
+        const sortedCountries = data.sort(
+          (a: CountryResult, b: CountryResult) => {
+            const nameA = a.name.common.toLowerCase();
+            const nameB = b.name.common.toLowerCase();
+            return nameA.localeCompare(nameB);
+          }
+        );
+        setCountry(sortedCountries);
+      } catch (error) {
+        console.error("Failed to fetch countries", error);
+      }
+    };
+    fetchCountry();
+  }, []);
 
-useEffect(() => {
-  const fetchCountry = async () => {
-    try {
-      const { data } = await axios.get("https://restcountries.com/v3.1/all");
-      const sortedCountries = data.sort((a: CountryResult, b: CountryResult) => {
-        const nameA = a.name.common.toLowerCase();
-        const nameB = b.name.common.toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-      setCountry(sortedCountries);
-    } catch (error) {
-      console.error("Failed to fetch countries", error);
-    }
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate("/jobs");
   };
-  fetchCountry();
-}, []);
 
-
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
-  e.preventDefault()
-  navigate("/jobs")
-}
-
-
-
-  
   return (
     <>
       <div className="md:h-[87vh] min-h-screen pt-24 md:pt-16 bg-blue-50">
@@ -74,14 +72,14 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
                     <select
                       id="category"
                       className="border-0 focus:outline-0 w-full"
-                      onChange={(e)=>setCategory(e.target.value)}
+                      onChange={(e) => setCategory(e.target.value)}
                     >
                       <option value="none" hidden disabled></option>
-                      {
-                        categories?.map((category)=>(
-                          <option value={category.name} key={category.slug} >{category.name}</option>
-                        ))
-                      }
+                      {categories?.map((category) => (
+                        <option value={category.name} key={category.slug}>
+                          {category.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
@@ -99,10 +97,8 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
                     <input
                       type="text"
                       className="border-0 focus:outline-0 w-full"
-                      onChange={(e)=>setRole(e.target.value)}
+                      onChange={(e) => setRole(e.target.value)}
                       value={role}
-                      
-                      
                     />
                   </div>
 
@@ -119,45 +115,69 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
                     </label>
                     <select
                       id="location"
-                      className="border-0 focus:outline-0 w-full" value={location}
-                      onChange={(e)=>setLocation(e.target.value)} 
+                      className="border-0 focus:outline-0 w-full"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
                     >
                       <option value="Remote">Remote</option>
-                      {
-                        country.map((coun:CountryResult)=>(
-                          <option value={coun.name.common} key={coun.ccn3} >{coun.name.common}</option>
-                        ))}
+                      {country.map((coun: CountryResult) => (
+                        <option value={coun.name.common} key={coun.ccn3}>
+                          {coun.name.common}
+                        </option>
+                      ))}
                     </select>
-                   
                   </div>
 
                   {/* Search Button */}
                   <div className="flex justify-end md:justify-start">
-                    
-                    
-                    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 w-full md:w-auto justify-center">
+                    <button
+                      type="submit"
+                      className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 w-full md:w-auto justify-center"
+                    >
                       <FaMagnifyingGlass className="text-white" />
                       <p>Search</p>
                     </button>
-                    
                   </div>
                 </div>
               </form>
             </div>
 
             <div className="images flex justify-center items-center overflow-hidden md:overflow-visible md:pb-0 pb-5">
-              <div className="relative flex flex-col md:flex-row items-center md:items-start w-full max-w-[500px] gap-4">
-                <img
-                  src={img1}
-                  alt=""
-                  className="w-[80%] md:w-[60%] rounded-t-4xl border-l-8 border-b-8 border-blue-600 rounded-br-4xl hover:scale-105 transition-all"
-                />
-                <img
-                  src={img2}
-                  alt=""
-                  className="w-[70%] md:w-[50%] rounded-t-4xl border-l-8 border-b-8 border-blue-600 hover:scale-105 transition-all md:absolute md:right-0 md:top-30 rounded-br-4xl"
-                />
-              </div>
+              <motion.div
+                className="relative flex flex-col md:flex-row items-center md:items-start w-full max-w-[500px] gap-4"
+                initial="hidden"
+                animate="show"
+              >
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: -50 },
+                    show: {
+                      opacity: 1,
+                      y: 1,
+                      transition: {
+                        duration: 0.4,
+                        ease: "easeIn",
+                        delay: 0.2,
+                      },
+                    },
+                  }}
+                >
+                  <img
+                    src={img1}
+                    alt=""
+                    className="w-[80%] md:w-[60%] rounded-t-4xl border-l-8 border-b-8 border-blue-600 rounded-br-4xl hover:scale-105 transition-all"
+                  />
+                </motion.div>
+                <motion.div
+            
+                >
+                  <img
+                    src={img2}
+                    alt=""
+                    className="w-[70%] md:w-[50%] rounded-t-4xl border-l-8 border-b-8 border-blue-600 hover:scale-105 transition-all md:absolute md:right-0 md:top-24 rounded-br-4xl"
+                  />
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </div>
