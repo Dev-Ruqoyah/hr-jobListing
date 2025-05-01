@@ -2,6 +2,7 @@ import { CalendarDays } from "lucide-react";
 import { useState } from "react";
 import { FaClock } from "react-icons/fa6";
 import Modal from "./Modal";
+import { motion } from "framer-motion";
 
 interface CompanyDetails {
   id: number;
@@ -33,7 +34,7 @@ const JobCard = ({ job }: { job: JobResult }) => {
 
   return (
     <>
-      <div
+      <motion.div initial={{opacity:0}} animate={{opacity:1}}
         className="bg-white p-5 rounded-lg border hover:shadow-lg transition duration-300 cursor-pointer"
         onClick={() => setOpen(true)}
       >
@@ -75,7 +76,7 @@ const JobCard = ({ job }: { job: JobResult }) => {
           className="text-sm text-gray-600 leading-relaxed line-clamp-4"
           dangerouslySetInnerHTML={{ __html: job.contents }}
         ></p>
-      </div>
+      </motion.div>
 
       <Modal
         isOpen={open}

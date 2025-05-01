@@ -6,6 +6,7 @@ import JobCard from "../Cards/Jobcard";
 import { Loader } from "lucide-react";
 import Loading from "../Loader/Loading";
 import JobResult from "../Models/JobModel";
+import { AnimatePresence, motion } from "framer-motion";
 
 const JobOfTheDay = () => {
   const Jobs = [
@@ -18,6 +19,14 @@ const JobOfTheDay = () => {
     "Software Engineering",
   ];
 
+  const jobContainerVariant ={
+    hidden:{opacity:0},
+    show:{opacity:1,
+      transiton:{
+        staggerChildren:0.2
+      }
+    }
+   }
   const [searchQuery, setJobQuery] = useState<string>("Sales");
   const [JobCategory, setJobCategory] = useState<[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,7 +36,7 @@ const JobOfTheDay = () => {
         const { data } = await axios.get(
           `https://www.themuse.com/api/public/jobs?category=${searchQuery}&page=1`
         );
-        // console.log(data.results[0].refs);
+        console.log(data.results[0]);
         setJobCategory(data.results);
         setLoading(false);
       } catch (error) {
@@ -70,11 +79,14 @@ const JobOfTheDay = () => {
             <Loading />
           ) : (
             JobCategory && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+              <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8" initial="hidden" animate="show" variants={jobContainerVariant}>
+                <AnimatePresence>
+
                 {JobCategory.map((job: JobResult) => (
                   <JobCard job={job} key={job.id} />
                 ))}
-              </div>
+                </AnimatePresence>
+              </motion.div>
             )
           )}
         </div>
