@@ -39,6 +39,7 @@ const Hero = () => {
     };
     fetchCountry();
   }, []);
+  
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -126,17 +127,18 @@ const Hero = () => {
                         </option>
                       ))}
                     </select>
+                    
                   </div>
 
                   {/* Search Button */}
-                  <div className="flex justify-end md:justify-start">
-                    <button
+                  <div className="flex justify-end md:justify-start" >
+                    <motion.button whileHover={{scale:1.1}} whileTap={{scale:0.8}}
                       type="submit"
                       className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 w-full md:w-auto justify-center"
                     >
                       <FaMagnifyingGlass className="text-white" />
                       <p>Search</p>
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
               </form>
