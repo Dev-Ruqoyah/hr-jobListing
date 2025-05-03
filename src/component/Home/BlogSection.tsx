@@ -1,38 +1,75 @@
-import React from "react";
+import { useAnimation, useInView, useScroll, useTransform ,motion} from "framer-motion";
+import React, { useEffect, useRef } from "react";
 import { Element } from "react-scroll";
 
-const blogs = [
-  {
-    id: 1,
-    title: "How to Find Your Dream Job",
-    description:
-      "Discover strategies to land your perfect job in any industry.",
-    image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
-    link: "#",
-  },
-  {
-    id: 2,
-    title: "Top Skills Employers Look For",
-    description: "Master these skills to stand out from the crowd.",
-    image:
-      "https://images.unsplash.com/photo-1603575448878-868a20723f5d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "#",
-  },
-  {
-    id: 3,
-    title: "Preparing for Job Interviews",
-    description: "Tips and tricks to ace your next interview.",
-    image:
-      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
-    link: "#",
-  },
-];
+
 
 const BlogSection: React.FC = () => {
+  const containerRef = useRef(null)
+
+  const isInView = useInView(containerRef, { once: true })
+  const mainControls = useAnimation()
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end end"],
+  })
+
+  const paragraphOneValue = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["-100%", "0%"]
+  )
+
+  const paragraphTwoValue = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["100%", "0%"]
+  )
+
+  useEffect(() => {
+    if (isInView) {
+      mainControls.start("visible")
+    }
+  }, [isInView])
+
+
+
+  const blogs = [
+    {
+      id: 1,
+      title: "How to Find Your Dream Job",
+      description:
+        "Discover strategies to land your perfect job in any industry.",
+      image:
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      link: "#",
+  
+    },
+    {
+      id: 2,
+      title: "Top Skills Employers Look For",
+      description: "Master these skills to stand out from the crowd.",
+      image:
+        "https://images.unsplash.com/photo-1603575448878-868a20723f5d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      link: "#",
+      style : { translateX: paragraphOneValue }
+
+      
+    },
+    {
+      id: 3,
+      title: "Preparing for Job Interviews",
+      description: "Tips and tricks to ace your next interview.",
+      image:
+        "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
+      link: "#",
+      style : { translateX: paragraphTwoValue }
+    },
+  ];
   return (
     <Element name="blog">
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-gray-100 overflow-x-hidden" ref={containerRef}>
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Our Blog</h2>
 
@@ -57,11 +94,13 @@ const BlogSection: React.FC = () => {
                 </a>
               </div>
             </div>
+            
 
             {/* Two Smaller Blogs */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {blogs.slice(1).map((blog) => (
-                <div
+                <motion.div style={blog.style}
+
                   key={blog.id}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300"
                 >
@@ -80,7 +119,7 @@ const BlogSection: React.FC = () => {
                       Read More →
                     </a>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
