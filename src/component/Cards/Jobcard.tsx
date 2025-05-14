@@ -14,13 +14,16 @@ interface JobResult {
   jobDescription: string;
   id: number;
   company: CompanyDetails;
-  locations: [];
+  locations: Locations[];
   publication_date: string;
   type: string;
   contents: string;
   refs: { landing_page: string };
 }
 
+interface Locations{
+  name: string
+}
 const formatDate = (dateStr: string) => {
   return new Date(dateStr).toLocaleDateString("en-US", {
     year: "numeric",
@@ -50,7 +53,7 @@ const JobCard = ({ job }: { job: JobResult }) => {
               {job.company.name}
             </h3>
             <p className="text-xs text-gray-500">
-              {job.locations?.[0]?.name || "Remote"}
+              {job.locations[0].name}
             </p>
           </div>
         </div>

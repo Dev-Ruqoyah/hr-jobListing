@@ -45,7 +45,7 @@ const JobCard2 = ({
             {job.company.name}
           </h3>
           <p className="text-xs text-gray-500">
-            {job.locations?.[0]?.name || "Remote"}
+            {job.locations[0].name}
           </p>
         </div>
       </div>

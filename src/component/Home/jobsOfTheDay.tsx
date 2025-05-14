@@ -3,7 +3,6 @@ import Header1 from "../Header/Header1";
 import Header2 from "../Header/Header2";
 import axios from "axios";
 import JobCard from "../Cards/Jobcard";
-import { Loader } from "lucide-react";
 import Loading from "../Loader/Loading";
 import JobResult from "../Models/JobModel";
 import { AnimatePresence, motion } from "framer-motion";
@@ -36,7 +35,7 @@ const JobOfTheDay = () => {
         const { data } = await axios.get(
           `https://www.themuse.com/api/public/jobs?category=${searchQuery}&page=1`
         );
-        console.log(data.results[0]);
+        // console.log(data.results[0]);
         setJobCategory(data.results);
         setLoading(false);
       } catch (error) {

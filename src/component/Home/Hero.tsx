@@ -50,7 +50,7 @@ const Hero = () => {
     <>
       <div className="md:h-[87vh] min-h-screen pt-24 md:pt-16 bg-blue-50">
         <div className="container max-w-6xl mx-auto h-full md:px-0 px-4">
-          <div className="grid md:grid-cols-2 gap-4 space-x-4   h-full">
+          <div className="grid md:grid-cols-2 gap-4 space-x-4 px-4  h-full">
             <div className="flex flex-col gap-3 justify-center">
               <h3 className="md:text-5xl text-3xl font-semibold">
                 The <span className="text-blue-600">Easiest Way</span> <br /> to

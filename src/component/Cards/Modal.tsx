@@ -25,7 +25,7 @@ const Modal: React.FC<ModalProps> = ({
   const logoUrl = `https://logo.clearbit.com/${companyShortName}.com`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity">
+    <div className="fixed inset-0 mt-24 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl p-6 relative animate-fadeIn border border-gray-200">
         {/* Close Button */}
         <button

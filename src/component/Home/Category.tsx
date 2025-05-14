@@ -2,11 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+
+import 'swiper/css';
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/grid";
+
 import Header1 from "../Header/Header1";
 import Header2 from "../Header/Header2";
 
@@ -96,7 +98,7 @@ const JobCategory = () => {
             className="max-w-7xl mx-auto h-full mt-12"
           >
               {Object.entries(JCategory).map(
-                ([categoryName, jobCount], index) => (
+                ([categoryName, jobCount]) => (
                   <SwiperSlide key={categoryName}>
                     <div className=" my-2 p-4 md:h-24 h-52 mb-7 overflow-hidden shadow-md rounded-md bg-white flex flex-col justify-center">
                       <h4 className="text-md font-medium text-blue-800 line-clamp-1">

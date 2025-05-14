@@ -1,10 +1,12 @@
+import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import Home from './pages/Home'
-import { createContext, useState } from 'react'
-import JobBrowse from './pages/Job'
+const Home = React.lazy(() => import('./pages/Home'));
+
+const JobBrowse = React.lazy(()=> import('./pages/Job'))
 import { SearchContext } from './component/Context/SearchContext'
-import ErrorPage from './component/Home/ErrorPage'
+const ErrorPage = React.lazy(()=>import('./pages/ErrorPage'))
+
 
 
 function App() {
